@@ -1,7 +1,3 @@
-Here’s an improved version of your instructions for a `README.md` file on GitHub:
-
----
-
 ## Running the Code
 
 You can run the code in two ways: **Python** or **.exe**. Follow the appropriate steps for your preferred method.
@@ -69,5 +65,3 @@ You can run the code in two ways: **Python** or **.exe**. Follow the appropriate
 - For any issues, check the logs in the `ExtractedFiles` folder for debugging.
 
 --- 
-
-This revised version improves clarity and formatting for easier reading and better organization in a `README.md`.
