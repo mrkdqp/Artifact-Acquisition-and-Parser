@@ -1,0 +1,5 @@
+﻿Timestamp,BatchKeyPath,KeyName,BatchValueName,ProfileImagePath,LastLogonTime,LastLogoffTime
+2009-07-14 04:53:25.7804181,CMI-CreateHive{199DAFC2-6F16-4946-BF90-5A3FC3A60902}\Microsoft\Windows NT\CurrentVersion\ProfileList\S-1-5-18,S-1-5-18,Multiple,%systemroot%\system32\config\systemprofile,,
+2025-02-05 01:00:20.9402028,CMI-CreateHive{199DAFC2-6F16-4946-BF90-5A3FC3A60902}\Microsoft\Windows NT\CurrentVersion\ProfileList\S-1-5-19,S-1-5-19,Multiple,C:\Windows\ServiceProfiles\LocalService,,
+2025-02-05 01:00:20.9402028,CMI-CreateHive{199DAFC2-6F16-4946-BF90-5A3FC3A60902}\Microsoft\Windows NT\CurrentVersion\ProfileList\S-1-5-20,S-1-5-20,Multiple,C:\Windows\ServiceProfiles\NetworkService,,
+2025-03-10 06:13:44.9874747,CMI-CreateHive{199DAFC2-6F16-4946-BF90-5A3FC3A60902}\Microsoft\Windows NT\CurrentVersion\ProfileList\S-1-5-21-3271601533-2962133082-2800808169-1000,S-1-5-21-3271601533-2962133082-2800808169-1000,Multiple,C:\Users\mrkdqp,,

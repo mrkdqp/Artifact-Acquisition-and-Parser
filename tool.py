@@ -1,3 +1,4 @@
+import sys
 import os
 import csv
 import subprocess
@@ -100,8 +101,16 @@ def process_hives(base_folder):
     
     merge_csvs(output_folder)
 
+import sys
+
 def main():
-    mode = input("Select mode (live/offline): ").strip().lower()
+    if len(sys.argv) < 2:
+        print("Usage: tool.exe <mode>")
+        print("Modes: live, offline")
+        return
+
+    mode = sys.argv[1].strip().lower()
+    
     if mode == "live":
         hives, output_dir = acquire_live()
         for hive, path in hives.items():
@@ -114,7 +123,7 @@ def main():
         offline_folder = os.path.join(os.getcwd(), "OfflineFiles")
         process_hives(offline_folder)
     else:
-        print("Invalid mode selected.")
+        print("Invalid mode selected. Use 'live' or 'offline'.")
 
 if __name__ == "__main__":
     main()

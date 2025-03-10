@@ -1,0 +1,5 @@
+﻿Timestamp,BatchKeyPath,KeyName,BatchValueName,ProfileImagePath,LastLogonTime,LastLogoffTime
+2022-05-07 05:28:05.9170837,ROOT\Microsoft\Windows NT\CurrentVersion\ProfileList\S-1-5-18,S-1-5-18,Multiple,%systemroot%\system32\config\systemprofile,,
+2022-05-07 05:28:05.9170837,ROOT\Microsoft\Windows NT\CurrentVersion\ProfileList\S-1-5-19,S-1-5-19,Multiple,%systemroot%\ServiceProfiles\LocalService,,
+2022-05-07 05:28:05.9170837,ROOT\Microsoft\Windows NT\CurrentVersion\ProfileList\S-1-5-20,S-1-5-20,Multiple,%systemroot%\ServiceProfiles\NetworkService,,
+2025-03-10 04:54:22.3783726,ROOT\Microsoft\Windows NT\CurrentVersion\ProfileList\S-1-5-21-3772742331-1108507784-3781162965-1001,S-1-5-21-3772742331-1108507784-3781162965-1001,Multiple,C:\Users\hans,2025-03-09 21:54:22.3783726,2025-03-09 21:30:55.8218174
