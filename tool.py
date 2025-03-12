@@ -17,11 +17,19 @@ HIVES = {
     "NTUSER": "Users\\Default\\NTUSER.DAT"
 }
 
+def get_next_folder_number():
+    extracted_files_path = os.path.join(os.getcwd(), "ExtractedFiles")
+    if not os.path.exists(extracted_files_path):
+        return 1
+
+    existing_folders = [int(folder) for folder in os.listdir(extracted_files_path) if folder.isdigit()]
+    return max(existing_folders) + 1 if existing_folders else 1
+
 def acquire_live():
     acquired_hives = {}
 
-    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    output_folder = os.path.join(os.getcwd(), "ExtractedFiles", timestamp)
+    folder_number = get_next_folder_number()
+    output_folder = os.path.join(os.getcwd(), "ExtractedFiles", str(folder_number))
     os.makedirs(output_folder, exist_ok=True)
 
     kape_path = r"KAPE\\kape.exe"
@@ -46,7 +54,7 @@ def acquire_live():
             print("Failed to acquire hives with KAPE. Check KAPE installation and permissions.")
     except subprocess.CalledProcessError:
         print("Failed to run KAPE command. Ensure KAPE is correctly configured.")
-    
+
     return acquired_hives, output_folder
 
 def parse_registry(hive_path, output_folder):
@@ -78,31 +86,6 @@ def merge_csvs(output_dir):
     combined_df.to_csv(merged_csv_path, index=False)
     print(f"Merged CSVs saved to {merged_csv_path}")
 
-def process_hives(base_folder):
-    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    output_folder = os.path.join(os.getcwd(), "ExtractedFiles", timestamp)
-    os.makedirs(output_folder, exist_ok=True)
-    
-    hives = {}
-    base_path = os.path.join(base_folder, "C")
-    for hive, relative_path in HIVES.items():
-        hive_path = os.path.join(base_path, relative_path)
-        if os.path.exists(hive_path):
-            hives[hive] = hive_path
-        
-    if not hives:
-        print("No valid registry hives found in offline directory.")
-        return
-    
-    for hive, path in hives.items():
-        hive_output_dir = os.path.join(output_folder, hive)
-        os.makedirs(hive_output_dir, exist_ok=True)
-        parse_registry(path, hive_output_dir)
-    
-    merge_csvs(output_folder)
-
-import sys
-
 def main():
     if len(sys.argv) < 2:
         print("Usage: tool.exe <mode>")
@@ -110,20 +93,52 @@ def main():
         return
 
     mode = sys.argv[1].strip().lower()
-    
+
     if mode == "live":
-        hives, output_dir = acquire_live()
+        action = input("Choose action: (1) Acquire hives, (2) Parse and merge hives, (3) Both: ")
+        if action == "1":
+            acquire_live()
+        elif action == "2":
+            folder_number = input("Enter the folder number inside ExtractedFiles to parse: ")
+            parse_folder = os.path.join(os.getcwd(), "ExtractedFiles", folder_number)
+            hives = {hive: os.path.join(parse_folder, "C", relative_path) for hive, relative_path in HIVES.items()}
+
+            for hive, path in hives.items():
+                if os.path.exists(path):
+                    hive_output_dir = os.path.join(parse_folder, hive)
+                    os.makedirs(hive_output_dir, exist_ok=True)
+                    parse_registry(path, hive_output_dir)
+
+            merge_csvs(parse_folder)
+        elif action == "3":
+            hives, output_dir = acquire_live()
+            for hive, path in hives.items():
+                if path:
+                    hive_output_dir = os.path.join(output_dir, hive)
+                    os.makedirs(hive_output_dir, exist_ok=True)
+                    parse_registry(path, hive_output_dir)
+            merge_csvs(output_dir)
+        else:
+            print("Invalid choice.")
+    elif mode == "offline":
+        offline_folder = os.path.join(os.getcwd(), "OfflineFiles")  # Original hive files
+        folder_number = get_next_folder_number()  # Creates a new subfolder number for parsed files
+        extracted_folder = os.path.join(os.getcwd(), "ExtractedFiles", str(folder_number))
+        os.makedirs(extracted_folder, exist_ok=True)  # Folder to store parsed files
+
+        hives = {hive: os.path.join(offline_folder, "C", relative_path) for hive, relative_path in HIVES.items()}
+
         for hive, path in hives.items():
-            if path:
-                hive_output_dir = os.path.join(output_dir, hive)
+            if os.path.exists(path):
+                hive_output_dir = os.path.join(extracted_folder, hive)  # Parsed files go in ExtractedFiles
                 os.makedirs(hive_output_dir, exist_ok=True)
                 parse_registry(path, hive_output_dir)
-        merge_csvs(output_dir)
-    elif mode == "offline":
-        offline_folder = os.path.join(os.getcwd(), "OfflineFiles")
-        process_hives(offline_folder)
+
+        # After parsing, merge the results from ExtractedFiles folder and save them back to the same folder
+        merge_csvs(extracted_folder)
     else:
-        print("Invalid mode selected. Use 'live' or 'offline'.")
+        print("Invalid mode selected. Use 'live'.")
+
 
 if __name__ == "__main__":
     main()
