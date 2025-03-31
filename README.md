@@ -1,7 +1,3 @@
-Sure! Here's an updated version of the instructions, incorporating the artifact acquisition and REGISTRY hives analysis, as well as the requirement to create an `OfflineFiles` folder for offline mode:
-
----
-
 ## Artifact Acquisition & REGISTRY Hive Analysis
 
 This tool is designed to help with artifact acquisition and the analysis of REGISTRY hives, commonly used in digital forensics or incident response. It extracts relevant files and data from the system, analyzes registry hives, and provides output that can be further examined.
@@ -79,7 +75,5 @@ You can run the code in two ways: **Python** or **.exe**. Below are the steps fo
 - **Dependencies**: Before running either method, make sure all dependencies are installed. You can do this by running `pip install -r requirements.txt` from the project directory.
 - **Offline Mode Folder**: If using **offline mode**, ensure that the `OfflineFiles` folder (or the folder name defined in the code) is properly populated with relevant data from KAPE or a similar tool.
 - **Logs**: If any issues arise during execution, check the logs in the `ExtractedFiles` folder for debugging information.
-
----
 
 This tool will acquire and analyze artifact data, including REGISTRY hives, from the specified system. The results will help with further analysis and forensic investigation.
